@@ -13,6 +13,10 @@ exports.handler = async (event) => {
 
         const body = res.Item ? res.Item : {'error': 'rates not available at this time'};
 
+        if (body.rates) {
+            body.rates = Object.keys(body.rates).sort().reduce((r, k) => (r[k] = body.rates[k], r), {});
+        }
+
         const response = {
             statusCode: 200,
             body: JSON.stringify(body),
